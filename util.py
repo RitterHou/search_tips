@@ -12,7 +12,7 @@ logging.basicConfig(level=logging.INFO,
                     datefmt='%Y-%m-%d %H:%M:%S',
                     format='%(asctime)s - %(levelname)5s - %(message)s', stream=sys.stdout)
 
-url = 'http://127.0.0.1:9200/goods'
+url = 'http://127.0.0.1:9200/products'
 
 
 def word_2_pinyin(input_str):
@@ -38,6 +38,8 @@ def word_2_pinyin(input_str):
 
     if isinstance(input_str, str):
         input_str = input_str.decode('utf-8')
+
+    # 得到三种拼音风格
     normal = pinyin(input_str, style=NORMAL, heteronym=True)
     first_letter = pinyin(input_str, style=FIRST_LETTER, heteronym=True)
     initials = pinyin(input_str, style=INITIALS, heteronym=True)
@@ -76,14 +78,6 @@ def create_index():
             'properties': {
                 'suggest': {
                     'type': 'completion'
-                },
-                'suggest_terms': {
-                    'type': 'keyword',
-                    'fields': {
-                        'analyzed': {
-                            'type': 'text'
-                        }
-                    }
                 }
             }
         }
@@ -91,4 +85,4 @@ def create_index():
     if r.status_code != 200:
         logging.error(r.content)
 
-    logging.info('create_index_success')
+    logging.info('{} create_index_success'.format(url))
