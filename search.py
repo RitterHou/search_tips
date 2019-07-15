@@ -37,8 +37,6 @@ def search(word):
 
 
 if __name__ == '__main__':
-    word = 'sd'
-
-    result = search(word)
+    result = search('kafeil')
     for res in result:
         print res['name']
